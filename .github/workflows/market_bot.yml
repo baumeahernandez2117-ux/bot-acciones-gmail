@@ -1,0 +1,30 @@
+name: Market Alert Bot (Gmail)
+
+on:
+  schedule:
+    # Se ejecuta automáticamente cada 15 minutos de lunes a viernes
+    - cron: '*/15 * * * 1-5'
+  workflow_dispatch: # Permite ejecutarlo manualmente cuando quieras probarlo
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          pip install yfinance pandas
+
+      - name: Ejecutar script de análisis
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+        run: python main.py
