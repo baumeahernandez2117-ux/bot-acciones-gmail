@@ -56,12 +56,12 @@ def analyze_market():
             
             print(f"-> {ticker}: Precio = ${last_price:.2f} | RSI = {last_rsi:.2f}")
 
-            if last_rsi <= 30:
+            if last_rsi <= 40:
                 send_gmail_alert(
                     f"🟢 COMPRA: {ticker}",
                     f"La acción {ticker} está en zona de sobreventa (RSI: {last_rsi:.2f}). Precio: ${last_price:.2f}"
                 )
-            elif last_rsi >= 70:
+            elif last_rsi >= 60:
                 send_gmail_alert(
                     f"🔴 VENTA: {ticker}",
                     f"La acción {ticker} está en zona de sobrecompra (RSI: {last_rsi:.2f}). Precio: ${last_price:.2f}"
